@@ -1,5 +1,8 @@
 # Project-3
 
+////////////////NOTE///////////////////
+Due to the enormous size of our data, it can't be uploaded onto Github.
+
 ////////////////////////// SPLAY TREE FUNCTION DECLARATIONS //////////////////////////
 template <typename T>
 class SplayTree
