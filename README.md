@@ -2,6 +2,7 @@
 
 ////////////////NOTE///////////////////
 Due to the enormous size of our data, it can't be uploaded onto Github.
+The full source codes are in the branches. The main branch should be neglected.
 
 ////////////////////////// SPLAY TREE FUNCTION DECLARATIONS //////////////////////////
 template <typename T>
