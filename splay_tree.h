@@ -11,6 +11,7 @@
 
 #pragma once
 #include <unordered_set>
+#include <iostream>
 using namespace std;
 
 /*================ SPLAY TREE CLASS ================*/
@@ -34,6 +35,8 @@ class SplayTree
 
 		// Constructor
 		Node(T* data = nullptr, Node* parent = nullptr, Node* left = nullptr, Node* right = nullptr);
+		// Destructor
+		~Node();
 	};
 
 	/*=== VERY IMPORTANT PRIVATE MEMBERS/FUNCTIONS CLUB ===*/
@@ -52,7 +55,6 @@ public:
 	/*===ITERATOR struct===*/
 	struct iterator
 	{
-		Node* beginPtr;
 		Node* nodePtr;
 		Node* endPtr;
 		unordered_set<Node*> visited;
@@ -117,7 +119,11 @@ SplayTree<T>::Node::Node(T* data, Node* parent, Node* left, Node* right) {
 
 	count = 0;
 }
-
+// Destructor
+template <typename T>
+SplayTree<T>::Node::~Node() {
+	delete data;
+}
 // ==================================== ITERATOR ====================================
 // Constructor
 template <typename T>
@@ -326,6 +332,7 @@ void SplayTree<T>::adjustMax() {
 // Performs left rotation on given node
 template <typename T>
 void SplayTree<T>::rotateLeft(Node* N) {
+	cout << "Left" << endl;
 	Node* oldNLeft = N->left;
 	N->left = N->parent;
 	N->parent->right = oldNLeft;
@@ -336,6 +343,7 @@ void SplayTree<T>::rotateLeft(Node* N) {
 // Performs right rotation on given node
 template <typename T>
 void SplayTree<T>::rotateRight(Node* N) {
+	cout << "Right" << endl;
 	Node* oldNRight = N->right;
 	N->right = N->parent;
 	N->parent->left = oldNRight;
@@ -346,17 +354,21 @@ void SplayTree<T>::rotateRight(Node* N) {
 // Splays node according to appropriate splay/rotation operations
 template <typename T>
 void SplayTree<T>::splay(Node* N) {
+	cout << N << endl;
 	if (N != nullptr) {
 		while (N->parent != nullptr) {
+			cout << "Need to see" << endl;
 			// If node parent's parent == nullptr
 			if (N->parent->parent == nullptr) {
 				// Perform zig (right) rotation
 				if (N->parent->left == N) {
 					rotateRight(N);
+					
 				}
 				// Perform zag (left) rotation
 				else {
 					rotateLeft(N);
+					
 				}
 			}
 			else {
@@ -394,7 +406,8 @@ void SplayTree<T>::splay(Node* N) {
 // Proceeds to splay tree after inserting node w/ respect to node inserted
 template <typename T>
 bool SplayTree<T>::insert(T& val) {
-	Node* newNode = new Node(&val);
+	T* data = new T(val);
+	Node* newNode = new Node(data);
 	newNode->left = endNode;
 	newNode->right = endNode;
 	if (root == endNode) {
@@ -415,6 +428,7 @@ bool SplayTree<T>::insert(T& val) {
 			else if (*(currNode->data) < val) {
 				if (currNode->left == endNode) {
 					currNode->left = newNode;
+					newNode->parent = currNode;
 					newNode->count++;
 					numNodes++;
 					splay(newNode);
@@ -429,6 +443,7 @@ bool SplayTree<T>::insert(T& val) {
 			else {
 				if (currNode->right == endNode) {
 					currNode->right = newNode;
+					newNode->parent = currNode;
 					newNode->count++;
 					numNodes++;
 					splay(newNode);
