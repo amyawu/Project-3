@@ -1,57 +1,88 @@
 # Project-3
 
-Important Splay Tree Functions and Members:
-/*===ITERATOR CLASS===*/
-    class iterator
-    {
-    public:
-        // Constructor
-        iterator(Node* nodePtr = nullptr,  Node* endPtr = nullptr);
-        // increment operators (++)
-        iterator& operator++();            // pre increment
-        iterator operator++(int);        // post increment
-        // decrement operators (--)
-        iterator& operator--();            // pre decrement
-        iterator operator--(int);        // post decrement
-        // equality (==)
-        bool operator==(const iterator& rhs) const;
-        // inequality (!=)
-        bool operator!=(const iterator& rhs) const;
-        // dereference (*)
-        const Node& operator*() const;
-        Node& operator*();
-    };
-    // Return iterator begin
-    iterator begin();
-    // Return iterator end
-    iterator end();
+////////////////////////// SPLAY TREE FUNCTION DECLARATIONS //////////////////////////
+template <typename T>
+class SplayTree
+{
+	/*===PRIVATE NESTED NODE STRUCT===*/
+	struct Node 
+	{
+		// Stores data value and parent, left child, and right child pointers
+		T* data;
+		Node* parent;
+		Node* left;
+		Node* right;
+		unsigned int count;
 
-/*=== VERY IMPORTANT FUNCTIONS ===*/
+		// Constructor
+		Node(T* data = nullptr, Node* parent = nullptr, Node* left = nullptr, Node* right = nullptr);
+	};
+
+	/*=== VERY IMPORTANT PRIVATE MEMBERS/FUNCTIONS CLUB ===*/
+	Node* root;
+	Node* maxNode;
+	Node* endNode;
+	unsigned int numNodes;
+	
+	void adjustMax();
+	// Rotation/Zig-zag operations
+	void rotateLeft(Node* N);
+	void rotateRight(Node* N);
+	void splay(Node* N);
+
+public:
+	/*===ITERATOR struct===*/
+	struct iterator
+	{
+		Node* beginPtr;
+		Node* nodePtr;
+		Node* endPtr;
+		unordered_set<Node*> visited;
+	public:
+		// Constructor
+		iterator(Node* nodePtr = nullptr,  Node* endPtr = nullptr);
+		// increment operators (++)
+		iterator& operator++();			// pre increment
+		iterator operator++(int);		// post increment
+		// decrement operators (--)
+		iterator& operator--();			// pre decrement
+		iterator operator--(int);		// post decrement
+		// equality (==)
+		bool operator==(const iterator& rhs) const;
+		// inequality (!=)
+		bool operator!=(const iterator& rhs) const;
+		// dereference (*)
+		const T& operator*() const;
+		T& operator*();
+		// indirect member access operator
+		T* operator->() const;
+
+	};
+	// Return iterator begin
+	iterator begin();
+	// Return iterator end
+	iterator end();
+
+	/*=== VERY IMPORTANT FUNCTIONS ===*/
 	// Constructor
 	SplayTree();
 	SplayTree(T& data);
-	// Copy constructor
-	SplayTree(const SplayTree& other);
-	// Copy assignment operator
-	SplayTree& operator=(const SplayTree& other);
 	// empty
 	bool empty() const;
 	// size
 	unsigned int size() const;
-	// peak
-	T& peak() const;
+	// peek
+	T& peek() const;
 	// insert
 	bool insert(T& val);
-	// pop
-	T& pop();
 	// erase
-	void erase(iterator position);
-	void erase(const T& val);
+	void erase(T& val);
 	// clear
 	void clear();
 	// find
-	iterator find(const T& val) const;
+	iterator find(T& val);
 	// count
-	unsigned int count(const T& val) const;
+	unsigned int count(T& val);
 	// Destructor
 	~SplayTree();
+};
