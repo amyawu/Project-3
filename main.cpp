@@ -4,15 +4,16 @@
 #include <vector>
 #include <fstream>
 #include <chrono>
-using namespace std::chrono;
-
+#include <algorithm>
 using namespace std;
-
+using namespace chrono;
 
 class Graph {
     unordered_map<string, unsigned int> mappy;
+
 public:
     void putIn(string category);
+    vector<pair<unsigned int, string>> organize();
 };
 
 void Graph::putIn(string category) {
@@ -24,6 +25,16 @@ void Graph::putIn(string category) {
     }
 }
 
+vector<pair<unsigned int, string>> Graph::organize() {
+    vector<pair<unsigned int, string>> ordering;
+    for(auto iter = mappy.begin(); iter != mappy.end(); iter++) {
+        ordering.push_back(make_pair(iter->second,iter->first));
+    }
+    sort(ordering.rbegin(), ordering.rend());
+    return ordering;
+}
+
+//opening and reading file
 void ReadFile(Graph unorderedMappy) {
     ifstream info("rows.csv");
     if (info.is_open()) {
@@ -47,8 +58,6 @@ void ReadFile(Graph unorderedMappy) {
     }
 }
 
-
-
 int main() {
     /*
      * runtime duration code from https://www.geeksforgeeks.org/measure-execution-time-function-cpp/
@@ -57,8 +66,9 @@ int main() {
 
     Graph unorderedMappy;
     ReadFile(unorderedMappy);
+    vector<pair<unsigned int, string>> ordered = unorderedMappy.organize();
 
-    cout << "Hello, World!" << endl;
+    cout << "The most common complaint is:" << ordered[0].second << endl;
 
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
