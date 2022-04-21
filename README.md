@@ -86,3 +86,9 @@ public:
 	// Destructor
 	~SplayTree();
 };
+	
+	
+///////////////////////////////////////////////////////////UNORDERED MAP////////////////////////////////////////////////////////////
+	The unordered map is quite self explanatory in the Unordered Map branch. The main branch was a baby code for reading in data for
+	both the tree and the map. 
+	
