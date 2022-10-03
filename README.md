@@ -1,5 +1,9 @@
 # Project-3
 
+////////////////NOTE///////////////////
+Due to the enormous size of our data, it can't be uploaded onto Github.
+The full source codes are in the branches. The main branch should be neglected.
+
 ////////////////////////// SPLAY TREE FUNCTION DECLARATIONS //////////////////////////
 template <typename T>
 class SplayTree
@@ -86,3 +90,9 @@ public:
 	// Destructor
 	~SplayTree();
 };
+	
+	
+///////////////////////////////////////////////////////////UNORDERED MAP////////////////////////////////////////////////////////////
+	The unordered map is quite self explanatory in the Unordered Map branch. The main branch was a baby code for reading in data for
+	both the tree and the map. 
+	
